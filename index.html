@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lakeland Assignment Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="topbar" aria-label="Assignment overview">
+        <div>
+          <p class="eyebrow">Lakeland University</p>
+          <h1>Assignment Tracker</h1>
+        </div>
+        <div class="summary-grid" aria-live="polite">
+          <article class="metric">
+            <span id="metricTotal">0</span>
+            <small>Total</small>
+          </article>
+          <article class="metric urgent">
+            <span id="metricDueSoon">0</span>
+            <small>Due soon</small>
+          </article>
+          <article class="metric done">
+            <span id="metricDone">0%</span>
+            <small>Complete</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <aside class="panel controls" aria-label="Filters and assignment form">
+          <div class="field">
+            <label for="searchInput">Search</label>
+            <input id="searchInput" type="search" placeholder="Assignment, class, or note" />
+          </div>
+
+          <div class="control-row">
+            <div class="field">
+              <label for="courseFilter">Class</label>
+              <select id="courseFilter"></select>
+            </div>
+            <div class="field">
+              <label for="statusFilter">Status</label>
+              <select id="statusFilter">
+                <option value="all">All</option>
+                <option value="Not Started">Not started</option>
+                <option value="In Progress">In progress</option>
+                <option value="Done">Done</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="tabs" role="tablist" aria-label="Tracker views">
+            <button class="tab active" data-view="all" type="button">All</button>
+            <button class="tab" data-view="today" type="button">Today</button>
+            <button class="tab" data-view="week" type="button">Week</button>
+            <button class="tab" data-view="overdue" type="button">Overdue</button>
+          </div>
+
+          <form id="assignmentForm" class="form-card">
+            <h2>Add assignment</h2>
+            <input type="hidden" id="assignmentId" />
+            <div class="field">
+              <label for="titleInput">Assignment</label>
+              <input id="titleInput" required placeholder="Discussion 2 replies" />
+            </div>
+            <div class="field">
+              <label for="courseInput">Class</label>
+              <input id="courseInput" list="courseOptions" required placeholder="Course name" />
+              <datalist id="courseOptions"></datalist>
+            </div>
+            <div class="control-row">
+              <div class="field">
+                <label for="dueInput">Due date</label>
+                <input id="dueInput" type="date" />
+              </div>
+              <div class="field">
+                <label for="priorityInput">Priority</label>
+                <select id="priorityInput">
+                  <option>Medium</option>
+                  <option>High</option>
+                  <option>Low</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="statusInput">Status</label>
+              <select id="statusInput">
+                <option>Not Started</option>
+                <option>In Progress</option>
+                <option>Done</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="notesInput">Notes</label>
+              <textarea id="notesInput" rows="4" placeholder="Reading pages, rubric notes, links, or reminders"></textarea>
+            </div>
+            <div class="button-row">
+              <button class="primary" type="submit">Save</button>
+              <button id="clearFormButton" type="button">Clear</button>
+            </div>
+          </form>
+
+          <div class="utility-row">
+            <button id="exportButton" type="button">Export JSON</button>
+            <label class="file-button" for="importFile">Import JSON</label>
+            <input id="importFile" type="file" accept="application/json" />
+          </div>
+        </aside>
+
+        <section class="board" aria-label="Assignments">
+          <div class="board-header">
+            <div>
+              <h2 id="viewTitle">All assignments</h2>
+              <p id="viewSubtitle">Sorted by due date, then priority.</p>
+            </div>
+            <button id="resetButton" type="button" title="Restore the original workbook starter data">Reset starter data</button>
+          </div>
+          <div id="assignmentList" class="assignment-list"></div>
+          <div id="emptyState" class="empty-state" hidden>
+            <h3>No assignments match this view</h3>
+            <p>Add a new task or adjust the filters to bring items back into view.</p>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <template id="assignmentTemplate">
+      <article class="assignment-card">
+        <div class="card-main">
+          <div class="status-toggle">
+            <button class="complete-button" type="button" aria-label="Mark complete"></button>
+          </div>
+          <div class="assignment-content">
+            <div class="card-topline">
+              <span class="course"></span>
+              <span class="due-pill"></span>
+            </div>
+            <h3></h3>
+            <p class="notes"></p>
+            <div class="chips">
+              <span class="chip status-chip"></span>
+              <span class="chip priority-chip"></span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="edit-button" type="button">Edit</button>
+          <button class="delete-button" type="button">Delete</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
