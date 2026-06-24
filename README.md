@@ -2,6 +2,11 @@
 
 A web-based assignment tracking application built to help students organize coursework, deadlines, and academic priorities.
 
+## Application Preview
+
+![Assignment Tracker](dashboard.png)
+
+
 ## Features
 
 - Track assignments by course
